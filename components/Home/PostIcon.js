@@ -1,6 +1,6 @@
 import { View, Image, StyleSheet } from 'react-native'
 export default PostFooter = () => (
-  <View>
+  <View style = {{marginTop:20}}>
     <View style={styles.footerpost}>
       <Image
         source={{ uri:'https://cdn2.iconfinder.com/data/icons/instagram-17/32/3-like-512.png',}}

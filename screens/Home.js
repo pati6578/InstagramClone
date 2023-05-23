@@ -1,33 +1,60 @@
-import { View, FlatList, Text } from 'react-native'
+import { useEffect, useState } from 'react'
+import { View, FlatList, Text} from 'react-native'
+import { getPhotos } from '../data/getPhotos'
 import PostImage from '../components/Home/PostImage'
-import data from '../data/search'
 import PostHeader from '../components/Home/PostHeader'
-import PostFooter from '../components/Home/PostFooter'
 import PostIcon from '../components/Home/PostIcon'
+
 export default function Home() {
+  const [albums, setAlbums] = useState([])
+  const [isLoading, setLoading] = useState(false)
+  const [isError, setError] = useState(false)
+
+  useEffect(() => {
+    async function fetchAlbums() {
+      setLoading(true)
+      getPhotos()
+        .then((newAlbums) => {
+          setAlbums(newAlbums)
+        })
+        .catch((e) => {
+          setError(e)
+        })
+        .finally(() => {
+          setLoading(false)
+        })
+    }
+
+    fetchAlbums()
+  }, [])
+
   return (
-    <View>
+    <View
+      style={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+        paddingTop:20
+      }}
+    >
       <FlatList
-        horizontal={false}
-        data={data}
+        isLoading={isLoading}
+        data={albums}
         renderItem={({ item, index }) => {
           index.id
           return (
-            <View style={{ marginBottom: 30 }}>
-              <PostHeader />
-              <PostImage
-                imageURI={item.url}
-                style={{ width: 100, height: 150 }}
-              />
-             
-              <PostIcon/>
-              <Text>848 999 wyświetlen</Text>
-              <PostFooter id={item.id} title={item.title} />
-              <Text>Commnets: Lorem Ipsum </Text>
+            <View>
+              <PostHeader albumId={item.id} />
+              <PostImage imageURI={item.url} title={item.title} />
+              <PostIcon />
+              <Text>88999 wyswietleń</Text>
+              <Text>Comments</Text>
             </View>
           )
         }}
       />
+       {isLoading && <Text>Loading...</Text>}
+      {isError && <Text>Something went wrong</Text>}
     </View>
   )
 }
