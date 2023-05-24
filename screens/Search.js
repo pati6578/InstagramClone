@@ -1,16 +1,11 @@
 import { useEffect, useState } from 'react'
-import { View, FlatList, Image, Text } from 'react-native'
+import { View, FlatList, Image, Text, StyleSheet } from 'react-native'
 import Searchbox from '../components/Search/Searchbox'
 import { getPhotos } from '../data/getPhotos'
+
 const ImageComponent = ({ imageURI }) => (
-  <View
-    style={{
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexDirection: 'row',
-    }}
-  >
-    <Image source={{ uri: imageURI }} style={{ width: 100, height: 150 }} />
+  <View style={styles.container}>
+    <Image source={{ uri: imageURI }} style={styles.imagesearch} />
   </View>
 )
 
@@ -57,3 +52,14 @@ export default function Search() {
     </View>
   )
 }
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  imagesearch: {
+    width: 100,
+    height: 150,
+  },
+})

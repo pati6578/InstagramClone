@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { View, FlatList, Text} from 'react-native'
+import { View, FlatList, Text, StyleSheet } from 'react-native'
 import { getPhotos } from '../data/getPhotos'
 import PostImage from '../components/Home/PostImage'
 import PostHeader from '../components/Home/PostHeader'
@@ -29,14 +29,7 @@ export default function Home() {
   }, [])
 
   return (
-    <View
-      style={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 1,
-        paddingTop:20
-      }}
-    >
+    <View style={styles.container}>
       <FlatList
         isLoading={isLoading}
         data={albums}
@@ -53,8 +46,16 @@ export default function Home() {
           )
         }}
       />
-       {isLoading && <Text>Loading...</Text>}
+      {isLoading && <Text>Loading...</Text>}
       {isError && <Text>Something went wrong</Text>}
     </View>
   )
 }
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    paddingTop: 20,
+  },
+})
